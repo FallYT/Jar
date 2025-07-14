@@ -1,139 +1,176 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Growtopia Donation Jar Overlay</title>
-<style>
-  body {
-    background: transparent;
-    font-family: Arial, sans-serif;
-    color: white;
-    margin: 0;
-    overflow: hidden;
-    user-select: none;
-  }
-  #container {
-    position: relative;
-    width: 320px;
-    margin: 20px auto;
-    text-align: center;
-  }
-  #jar {
-    position: relative;
-    margin: 0 auto;
-    width: 300px;
-    height: 400px;
-    background: url('jar.png') no-repeat center bottom;
-    background-size: contain;
-    overflow: visible;
-  }
-  #fall-area {
-    position: absolute;
-    bottom: 0;
-    left: 10%;
-    width: 80%;
-    height: 380px;
-    pointer-events: none;
-    overflow: visible;
-  }
-  .falling-lock {
-    position: absolute;
-    bottom: 0;
-    width: 30px;
-    height: 30px;
-    background-size: contain;
-    background-repeat: no-repeat;
-    animation-name: fall;
-    animation-duration: 3s;
-    animation-timing-function: linear;
-    animation-fill-mode: forwards;
-  }
-  .world-lock {
-    background-image: url('worldlock.png');
-  }
-  .diamond-lock {
-    background-image: url('diamondlock.png');
-  }
-  @keyframes fall {
-    0% {
-      transform: translateY(0);
-      opacity: 1;
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Growtopia Donation Jar</title>
+  <style>
+    body {
+      margin: 0; padding: 0;
+      font-family: 'Arial', sans-serif;
+      background: #121212;
+      color: #eee;
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
     }
-    90% {
-      opacity: 1;
+    #control {
+      width: 30%;
+      background: #222;
+      padding: 20px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
     }
-    100% {
-      transform: translateY(350px);
-      opacity: 0;
+    #control h2 {
+      margin: 0 0 10px 0;
+      color: #76c7c0;
     }
-  }
-  #progress-container {
-    width: 300px;
-    height: 20px;
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 10px;
-    margin: 15px auto 0;
-    overflow: hidden;
-  }
-  #progress-fill {
-    height: 100%;
-    background: linear-gradient(90deg, #00f0ff, #0055ff);
-    width: 0%;
-    transition: width 0.5s ease;
-  }
-  #progress-text {
-    margin-top: 5px;
-    font-size: 16px;
-  }
-  #control-panel {
-    width: 320px;
-    margin: 10px auto;
-    color: white;
-    text-align: center;
-  }
-  input[type="number"] {
-    width: 60px;
-    padding: 5px;
-    margin: 0 5px;
-    font-size: 16px;
-    border-radius: 6px;
-    border: none;
-    text-align: center;
-  }
-  button {
-    padding: 8px 20px;
-    font-size: 16px;
-    margin-left: 10px;
-    cursor: pointer;
-    border-radius: 6px;
-    border: none;
-    background-color: #0077ff;
-    color: white;
-  }
-</style>
+    label {
+      display: block;
+      margin-bottom: 4px;
+    }
+    input[type=number] {
+      width: 100%;
+      padding: 8px;
+      border-radius: 4px;
+      border: none;
+      font-size: 16px;
+      box-sizing: border-box;
+    }
+    button {
+      padding: 12px;
+      background: #76c7c0;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      font-size: 18px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background: #4a8f8c;
+    }
+    #overlay {
+      position: relative;
+      width: 70%;
+      background: linear-gradient(135deg, #223344, #112233);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
+      overflow: hidden;
+    }
+    #jar-container {
+      position: relative;
+      width: 320px;
+      height: 500px;
+      margin-top: auto;
+      background: url('jar.png') no-repeat center bottom;
+      background-size: contain;
+    }
+    #fall-area {
+      position: absolute;
+      bottom: 60px;
+      left: 25px;
+      width: 270px;
+      height: 370px;
+      overflow: visible;
+      pointer-events: none;
+    }
+    .falling-lock {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      pointer-events: none;
+      user-select: none;
+      filter: drop-shadow(0 0 2px black);
+      animation: fall 3s ease forwards;
+    }
+    .diamond-lock {
+      background: url('diamond_lock.png') no-repeat center;
+      background-size: contain;
+    }
+    .world-lock {
+      background: url('world_lock.png') no-repeat center;
+      background-size: contain;
+    }
+    @keyframes fall {
+      0% {
+        top: -50px;
+        opacity: 1;
+        transform: translateX(0) rotate(0deg);
+      }
+      70% {
+        opacity: 1;
+        transform: translateX(15px) rotate(180deg);
+      }
+      100% {
+        top: 330px;
+        opacity: 0;
+        transform: translateX(0) rotate(360deg);
+      }
+    }
+
+    #progress-wrapper {
+      width: 320px;
+      margin-top: 12px;
+      text-align: center;
+    }
+    #progress-text {
+      font-size: 16px;
+      margin-bottom: 6px;
+    }
+    #progress-bar {
+      width: 100%;
+      background: #333;
+      border-radius: 20px;
+      overflow: hidden;
+      height: 20px;
+    }
+    #progress-fill {
+      height: 100%;
+      width: 0%;
+      background: #76c7c0;
+      transition: width 0.5s ease;
+    }
+  </style>
 </head>
 <body>
-  <div id="container">
-    <div id="jar">
-      <div id="fall-area"></div>
-    </div>
-    <div id="progress-container">
-      <div id="progress-fill"></div>
-    </div>
-    <div id="progress-text">Goal: 500 DL — Raised: 0 DL (0%)</div>
-  </div>
-  <div id="control-panel">
-    <label>World Locks:</label>
-    <input type="number" id="wlCount" min="0" value="0" />
-    <label>Diamond Locks:</label>
-    <input type="number" id="dlCount" min="0" value="0" />
-    <button id="dropBtn">Drop</button>
+
+<div id="control">
+  <h2>Donation Jar Control</h2>
+
+  <label for="goalDL">Set Goal (in DL):</label>
+  <input type="number" id="goalDL" min="1" value="500" />
+
+  <label for="wlCount">World Locks to drop:</label>
+  <input type="number" id="wlCount" min="0" max="999" value="0" />
+
+  <label for="dlCount">Diamond Locks to drop:</label>
+  <input type="number" id="dlCount" min="0" max="999" value="0" />
+
+  <button id="dropBtn">Drop Locks!</button>
+</div>
+
+<div id="overlay">
+  <div id="jar-container">
+    <div id="fall-area"></div>
   </div>
 
+  <div id="progress-wrapper">
+    <div id="progress-text">Goal: 500 DL — Raised: 0 DL (0%)</div>
+    <div id="progress-bar">
+      <div id="progress-fill"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Firebase SDKs -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
-  import { getDatabase, ref, onValue, set } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-database.js";
+  import { getDatabase, ref, onValue, update, get } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-database.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyDos-kzkfRV1n6_quPwFvdNthftUp7OosE",
@@ -146,60 +183,104 @@
     measurementId: "G-W1RHFNSYZN"
   };
 
+  // Initialize Firebase
   const app = initializeApp(firebaseConfig);
   const db = getDatabase(app);
 
-  const totalRaisedRef = ref(db, 'totalRaised');
-  const GOAL = 500;
-
+  // DOM Elements
   const fallArea = document.getElementById('fall-area');
-  const progressText = document.getElementById('progress-text');
-  const progressFill = document.getElementById('progress-fill');
   const dropBtn = document.getElementById('dropBtn');
   const wlInput = document.getElementById('wlCount');
   const dlInput = document.getElementById('dlCount');
+  const goalInput = document.getElementById('goalDL');
+  const progressText = document.getElementById('progress-text');
+  const progressFill = document.getElementById('progress-fill');
 
+  // Firebase refs
+  const dataRef = ref(db, 'donationJar/data');
+
+  // Local state mirrors DB
   let totalRaised = 0;
+  let goal = 500;
 
   function createLock(type) {
     const lock = document.createElement('div');
-    lock.classList.add('falling-lock', type === 'DL' ? 'diamond-lock' : 'world-lock');
+    lock.classList.add('falling-lock');
+    lock.classList.add(type === 'DL' ? 'diamond-lock' : 'world-lock');
     lock.style.left = `${Math.random() * 85 + 5}%`;
     fallArea.appendChild(lock);
-    lock.addEventListener('animationend', () => lock.remove());
+
+    lock.addEventListener('animationend', () => {
+      lock.remove();
+    });
   }
 
   function dropLocks(type, count) {
     for (let i = 0; i < count; i++) {
-      setTimeout(() => createLock(type), i * 150);
+      setTimeout(() => {
+        createLock(type);
+      }, i * 200);
     }
   }
 
   function updateProgressBar() {
-    const percent = Math.min((totalRaised / GOAL) * 100, 100).toFixed(1);
-    progressText.textContent = `Goal: ${GOAL} DL — Raised: ${totalRaised.toFixed(2)} DL (${percent}%)`;
+    const percent = Math.min((totalRaised / goal) * 100, 100).toFixed(1);
+    progressText.textContent = `Goal: ${goal} DL — Raised: ${totalRaised.toFixed(2)} DL (${percent}%)`;
     progressFill.style.width = `${percent}%`;
   }
 
+  function syncFromDatabase(data) {
+    if (data) {
+      totalRaised = data.totalRaised || 0;
+      goal = data.goal || 500;
+      goalInput.value = goal;
+      updateProgressBar();
+    }
+  }
+
+  // Listen for live DB updates
+  onValue(dataRef, (snapshot) => {
+    const data = snapshot.val();
+    syncFromDatabase(data);
+  });
+
+  // On drop button press, update DB and trigger animation
   dropBtn.onclick = async () => {
     const wl = parseInt(wlInput.value) || 0;
     const dl = parseInt(dlInput.value) || 0;
+    const newGoal = parseInt(goalInput.value) || 500;
+
+    if (wl === 0 && dl === 0) return;
+
+    // Calculate DL equivalent value (1 DL + 0.01 per WL)
     const dlValue = dl + wl / 100;
-    const newTotal = totalRaised + dlValue;
 
-    await set(totalRaisedRef, newTotal);
+    // Get current DB snapshot once to avoid conflicts
+    const snapshot = await get(dataRef);
+    const currentData = snapshot.val() || { totalRaised: 0, goal: 500 };
 
-    dropLocks("WL", wl);
-    dropLocks("DL", dl);
+    // Update totalRaised and goal in DB
+    await update(dataRef, {
+      totalRaised: currentData.totalRaised + dlValue,
+      goal: newGoal
+    });
 
+    // Drop animation locally (will be synced via DB to all clients)
+    dropLocks('WL', wl);
+    dropLocks('DL', dl);
+
+    // Reset inputs
     wlInput.value = 0;
     dlInput.value = 0;
   };
 
-  onValue(totalRaisedRef, (snapshot) => {
-    totalRaised = snapshot.val() || 0;
-    updateProgressBar();
-  });
+  // Update goalInput when changed locally and update DB
+  goalInput.onchange = async () => {
+    const newGoal = parseInt(goalInput.value) || 500;
+    await update(dataRef, { goal: newGoal });
+  };
+
 </script>
+
 </body>
 </html>
