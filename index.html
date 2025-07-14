@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Growtopia Donation Jar Overlay + Control</title>
+<style>
+  body {
+    margin: 0; padding: 0;
+    font-family: 'Arial', sans-serif;
+    background: #121212;
+    color: #eee;
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+  }
+  #control {
+    width: 30%;
+    background: #222;
+    padding: 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  #control h2 {
+    margin: 0 0 10px 0;
+    color: #76c7c0;
+  }
+  label {
+    display: block;
+    margin-bottom: 4px;
+  }
+  input[type=number] {
+    width: 100%;
+    padding: 8px;
+    border-radius: 4px;
+    border: none;
+    font-size: 16px;
+    box-sizing: border-box;
+  }
+  button {
+    padding: 12px;
+    background: #76c7c0;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  button:hover {
+    background: #4a8f8c;
+  }
+  #overlay {
+    position: relative;
+    width: 70%;
+    background: linear-gradient(135deg, #223344, #112233);
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    overflow: hidden;
+  }
+  #jar-container {
+    position: relative;
+    width: 320px;
+    height: 500px;
+    margin-bottom: 20px;
+    background: url('jar.png') no-repeat center bottom;
+    background-size: contain;
+  }
+  #fall-area {
+    position: absolute;
+    bottom: 60px;
+    left: 25px;
+    width: 270px;
+    height: 370px;
+    overflow: visible;
+    pointer-events: none;
+  }
+  .falling-lock {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    pointer-events: none;
+    user-select: none;
+    filter: drop-shadow(0 0 2px black);
+    animation: fall 3s ease forwards;
+  }
+  .diamond-lock {
+    background: url('diamond_lock.png') no-repeat center;
+    background-size: contain;
+  }
+  .world-lock {
+    background: url('world_lock.png') no-repeat center;
+    background-size: contain;
+  }
+  @keyframes fall {
+    0% {
+      top: -50px;
+      opacity: 1;
+      transform: translateX(0) rotate(0deg);
+    }
+    70% {
+      opacity: 1;
+      transform: translateX(15px) rotate(180deg);
+    }
+    100% {
+      top: 330px;
+      opacity: 0;
+      transform: translateX(0) rotate(360deg);
+    }
+  }
+</style>
+</head>
+<body>
+
+<div id="control">
+  <h2>Donation Jar Control Panel</h2>
+  <label for="wlCount">World Locks to drop:</label>
+  <input type="number" id="wlCount" min="0" max="100" value="0" />
+  <label for="dlCount">Diamond Locks to drop:</label>
+  <input type="number" id="dlCount" min="0" max="100" value="0" />
+  <button id="dropBtn">Drop Locks!</button>
+</div>
+
+<div id="overlay">
+  <div id="jar-container">
+    <div id="fall-area"></div>
+  </div>
+</div>
+
+<script>
+  const fallArea = document.getElementById('fall-area');
+  const dropBtn = document.getElementById('dropBtn');
+  const wlCountInput = document.getElementById('wlCount');
+  const dlCountInput = document.getElementById('dlCount');
+
+  function createLock(type) {
+    const lock = document.createElement('div');
+    lock.classList.add('falling-lock');
+    if (type === 'DL') {
+      lock.classList.add('diamond-lock');
+    } else {
+      lock.classList.add('world-lock');
+    }
+    // random horizontal position inside fall area
+    const leftPercent = Math.random() * 85 + 5;
+    lock.style.left = leftPercent + '%';
+    fallArea.appendChild(lock);
+
+    // Remove after animation ends (~3s)
+    lock.addEventListener('animationend', () => {
+      lock.remove();
+    });
+  }
+
+  function dropLocks(type, count) {
+    for (let i = 0; i < count; i++) {
+      setTimeout(() => {
+        createLock(type);
+      }, i * 300);
+    }
+  }
+
+  dropBtn.onclick = () => {
+    const wlCount = parseInt(wlCountInput.value) || 0;
+    const dlCount = parseInt(dlCountInput.value) || 0;
+    if (wlCount === 0 && dlCount === 0) return;
+    dropLocks('WL', wlCount);
+    dropLocks('DL', dlCount);
+  };
+</script>
+
+</body>
+</html>
