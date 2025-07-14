@@ -1,134 +1,142 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Growtopia Donation Jar</title>
-  <style>
-    body {
-      margin: 0; padding: 0;
-      font-family: 'Arial', sans-serif;
-      background: #121212;
-      color: #eee;
-      display: flex;
-      height: 100vh;
-      overflow: hidden;
-    }
-    #control {
-      width: 30%;
-      background: #222;
-      padding: 20px;
-      box-sizing: border-box;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-    #control h2 {
-      margin: 0 0 10px 0;
-      color: #76c7c0;
-    }
-    label {
-      display: block;
-      margin-bottom: 4px;
-    }
-    input[type=number] {
-      width: 100%;
-      padding: 8px;
-      border-radius: 4px;
-      border: none;
-      font-size: 16px;
-      box-sizing: border-box;
-    }
-    button {
-      padding: 12px;
-      background: #76c7c0;
-      border: none;
-      border-radius: 6px;
-      font-weight: bold;
-      font-size: 18px;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-    button:hover {
-      background: #4a8f8c;
-    }
-    #overlay {
-      position: relative;
-      width: 70%;
-      background: linear-gradient(135deg, #223344, #112233);
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      align-items: center;
-      overflow: hidden;
-    }
-    #jar-container {
-      position: relative;
-      margin-top: auto;
-      background: url('jar.png') no-repeat center bottom;
-      background-size: contain;
-      /* size set dynamically */
-    }
-    #fall-area {
-      position: absolute;
-      pointer-events: none;
-    }
-    .falling-lock {
-      pointer-events: none;
-      user-select: none;
-      filter: drop-shadow(0 0 1px black);
-      position: absolute;
-      background-repeat: no-repeat;
-      background-position: center;
-      background-size: contain;
-    }
-    .diamond-lock {
-      background-image: url('diamond_lock.png');
-    }
-    .world-lock {
-      background-image: url('world_lock.png');
-    }
-    #progress-wrapper {
-      width: 100%;
-      max-width: 100%;
-      margin-top: 12px;
-      text-align: center;
-      padding: 0 10px 20px 10px;
-      box-sizing: border-box;
-    }
-    #progress-text {
-      font-size: 16px;
-      margin-bottom: 6px;
-    }
-    #progress-bar {
-      width: 100%;
-      background: #333;
-      border-radius: 20px;
-      overflow: hidden;
-      height: 20px;
-    }
-    #progress-fill {
-      height: 100%;
-      width: 0%;
-      background: #76c7c0;
-      transition: width 0.5s ease;
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Growtopia Donation Jar</title>
+<style>
+  body {
+    margin: 0; padding: 0;
+    font-family: 'Arial', sans-serif;
+    background: #121212;
+    color: #eee;
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+  }
+  #control {
+    width: 22%;
+    background: #222;
+    padding: 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  #control h2 {
+    margin: 0 0 10px 0;
+    color: #76c7c0;
+  }
+  label {
+    display: block;
+    margin-bottom: 4px;
+  }
+  input[type=number] {
+    width: 100%;
+    padding: 8px;
+    border-radius: 4px;
+    border: none;
+    font-size: 16px;
+    box-sizing: border-box;
+  }
+  button {
+    padding: 12px;
+    background: #76c7c0;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  button:hover {
+    background: #4a8f8c;
+  }
+  #overlay {
+    position: relative;
+    width: 78%;
+    background: linear-gradient(135deg, #223344, #112233);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    overflow: hidden;
+  }
+  #jar-container {
+    position: relative;
+    margin-top: auto;
+    background: url('jar.png') no-repeat center bottom;
+    background-size: contain;
+    width: 480px;
+    height: 720px;
+  }
+  #fall-area {
+    position: absolute;
+    bottom: 18%;
+    left: 0;
+    width: 100%;
+    height: 74%;
+    overflow: visible;
+    pointer-events: none;
+  }
+  .falling-lock {
+    pointer-events: none;
+    user-select: none;
+    filter: drop-shadow(0 0 1px black);
+    position: absolute;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    opacity: 1;
+    transition: transform 1.5s ease, opacity 1.5s ease;
+    will-change: transform, opacity;
+    z-index: 10;
+    width: 18px;
+    height: 18px;
+  }
+  .diamond-lock {
+    background-image: url('diamond_lock.png');
+  }
+  .world-lock {
+    background-image: url('world_lock.png');
+  }
+  #progress-wrapper {
+    width: 100%;
+    max-width: 100%;
+    margin-top: 12px;
+    text-align: center;
+    padding: 0 10px 20px 10px;
+    box-sizing: border-box;
+  }
+  #progress-text {
+    font-size: 18px;
+    margin-bottom: 6px;
+  }
+  #progress-bar {
+    width: 100%;
+    background: #333;
+    border-radius: 20px;
+    overflow: hidden;
+    height: 24px;
+  }
+  #progress-fill {
+    height: 100%;
+    width: 0%;
+    background: #76c7c0;
+    transition: width 0.5s ease;
+  }
+</style>
 </head>
 <body>
 
 <div id="control">
   <h2>Donation Jar Control</h2>
-
   <label for="goalDL">Set Goal (in DL):</label>
   <input type="number" id="goalDL" min="1" value="500" />
-
   <label for="wlCount">World Locks to drop:</label>
   <input type="number" id="wlCount" min="0" max="999" value="0" />
-
   <label for="dlCount">Diamond Locks to drop:</label>
   <input type="number" id="dlCount" min="0" max="999" value="0" />
-
   <button id="dropBtn">Drop Locks!</button>
 </div>
 
@@ -146,9 +154,11 @@
 </div>
 
 <script type="module">
+  // Firebase SDK imports
   import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
-  import { getDatabase, ref, onValue, set } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-database.js";
+  import { getDatabase, ref, onValue, set, update } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-database.js";
 
+  // Your Firebase config (replace with your actual config)
   const firebaseConfig = {
     apiKey: "AIzaSyDos-kzkfRV1n6_quPwFvdNthftUp7OosE",
     authDomain: "donation-jar.firebaseapp.com",
@@ -160,210 +170,129 @@
     measurementId: "G-W1RHFNSYZN"
   };
 
+  // Initialize Firebase
   const app = initializeApp(firebaseConfig);
   const db = getDatabase(app);
-  const dataRef = ref(db, 'donationJar');
 
   const fallArea = document.getElementById('fall-area');
   const dropBtn = document.getElementById('dropBtn');
   const wlInput = document.getElementById('wlCount');
   const dlInput = document.getElementById('dlCount');
   const goalInput = document.getElementById('goalDL');
+
   const progressText = document.getElementById('progress-text');
   const progressFill = document.getElementById('progress-fill');
   const jarContainer = document.getElementById('jar-container');
 
-  // Base size config (these are minimum sizes)
-  const baseJarWidth = 320; // base jar width in px
-  const baseJarHeight = 500; // base jar height in px
-  const baseLockSize = 14;   // base lock size in px
+  const MAX_LOCKS = 500; // max locks capacity
 
-  // Constants
-  const targetLockCount = 500; // we want jar to hold approx 500 diamond locks
-  const wlPerDlConversion = 100; // 100 world locks convert into 1 diamond lock
+  // State tracked in Firebase
+  let state = {
+    totalDL: 0,
+    totalWL: 0,
+    goalDL: parseInt(goalInput.value, 10)
+  };
 
-  // State
-  let totalDL = 0;     // total diamond lock equivalent raised
-  let totalWL = 0;     // total world locks raised
-  let goal = parseInt(goalInput.value) || 500;
+  // Positions for locks to avoid stacking exactly (simple random jitter)
+  function getRandomPosition(index) {
+    // Arrange locks in rows and columns inside fall area
+    const cols = 25;
+    const rows = Math.ceil(MAX_LOCKS / cols);
+    const lockSize = 18;
+    const padding = 2;
 
-  // Elements tracking
-  let droppedLocks = [];
+    let row = Math.floor(index / cols);
+    let col = index % cols;
 
-  // Compute scaling so jar & lock sizes scale together keeping 500 lock capacity
-  // Assume locks arranged in cols x rows grid inside jar fill area (about 74% height)
-  // Area for locks: jarWidth * jarHeight * 0.74
-  // lock area per lock = lockSize^2
-  // targetLockCount = floor((jarWidth / lockSize) * (jarHeight * 0.74 / lockSize))
-  // => Solve for scale factor that scales baseLockSize so this equals targetLockCount
+    // Calculate x, y within fall-area
+    let x = col * (lockSize + padding) + (Math.random() * 4 - 2); // random jitter ±2px
+    let y = (rows - row - 1) * (lockSize + padding) + (Math.random() * 4 - 2);
 
-  function computeScale() {
-    // Solve quadratic for scale factor s:
-    // cols = floor(jarWidth / lockSize) = floor(baseJarWidth * s / (baseLockSize * s)) = floor(baseJarWidth / baseLockSize) = constant
-    // But this won't scale as expected if lockSize and jarWidth scaled equally. So let's do proportional scaling:
-
-    // Let s be scale factor for lock and jar sizes:
-    // cols = floor(baseJarWidth * s / (baseLockSize * s)) = floor(baseJarWidth / baseLockSize) (fixed)
-    // rows = floor((baseJarHeight * s * 0.74) / (baseLockSize * s)) = floor((baseJarHeight * 0.74) / baseLockSize) (fixed)
-    // So cols and rows are fixed if scaled proportionally.
-
-    // That means scaling both jar and locks by same factor does NOT change capacity.
-
-    // So to have capacity of 500, base must already fit 500 locks at scale 1.
-    // Let's check:
-
-    const cols = Math.floor(baseJarWidth / baseLockSize);
-    const rows = Math.floor((baseJarHeight * 0.74) / baseLockSize);
-    const capacity = cols * rows;
-    if (capacity < targetLockCount) {
-      // To increase capacity, increase jar size or decrease lock size
-
-      // Let's increase jar size to fit targetLockCount locks with baseLockSize locks
-
-      // Solve for jarHeight required:
-      // targetLockCount = cols * rows
-      // rows = targetLockCount / cols
-      // jarHeight_required = (rows * baseLockSize) / 0.74
-      const jarHeightRequired = (targetLockCount / cols) * baseLockSize / 0.74;
-      const scale = jarHeightRequired / baseJarHeight;
-      return scale;
-    } else {
-      return 1; // base fits 500 locks already
-    }
+    return { x, y };
   }
 
-  // Because scaling jar and locks equally does not increase capacity,
-  // we will keep lock size fixed and scale only jar height & width (scale jarWidth and jarHeight, keep lockSize fixed)
-  // to fit exactly 500 locks.
-
-  const scale = computeScale();
-  const jarWidth = baseJarWidth * scale;
-  const jarHeight = baseJarHeight * scale;
-  const lockSize = baseLockSize;
-
-  jarContainer.style.width = jarWidth + 'px';
-  jarContainer.style.height = jarHeight + 'px';
-
-  fallArea.style.width = jarWidth + 'px';
-  fallArea.style.height = (jarHeight * 0.74) + 'px';
-  fallArea.style.left = '0px';
-  fallArea.style.bottom = (jarHeight * 0.18) + 'px';
-
-  // Grid params
-  const cols = Math.floor(jarWidth / lockSize);
-  const rows = Math.floor((jarHeight * 0.74) / lockSize);
-  const maxLocks = cols * rows; // max locks displayed in jar
-
-  // Clear all displayed locks
-  function clearLocks() {
-    droppedLocks.forEach(lock => lock.remove());
-    droppedLocks = [];
-  }
-
-  // Add a lock at grid index, type = "DL" or "WL"
-  function addLock(type, index) {
-    const lock = document.createElement('div');
-    lock.classList.add('falling-lock');
-    lock.classList.add(type === 'DL' ? 'diamond-lock' : 'world-lock');
-    lock.style.width = lockSize + 'px';
-    lock.style.height = lockSize + 'px';
-
-    const col = index % cols;
-    const row = Math.floor(index / cols);
-
-    lock.style.left = `${col * lockSize}px`;
-    lock.style.bottom = `${row * lockSize}px`;
-
-    fallArea.appendChild(lock);
-    droppedLocks.push(lock);
-  }
-
-  // Update lock display in jar based on totalDL and totalWL converted
-  function updateJarDisplay() {
-    clearLocks();
-
-    // Convert world locks into diamond locks
-    const convertedDLFromWL = Math.floor(totalWL / wlPerDlConversion);
-    const remainderWL = totalWL % wlPerDlConversion;
-
-    // Total diamond locks to show = base + converted
-    const totalDiamondLocks = Math.floor(totalDL) + convertedDLFromWL;
-    const totalWorldLocks = remainderWL;
-
-    // Total locks to display
-    const totalLocks = totalDiamondLocks + totalWorldLocks;
-
-    // Limit to maxLocks to avoid overflow
-    const displayCount = Math.min(totalLocks, maxLocks);
-
-    // Draw diamond locks first
-    for(let i=0; i < Math.min(totalDiamondLocks, maxLocks); i++) {
-      addLock('DL', i);
-    }
-
-    // Draw world locks after diamond locks if space left
-    for(let i=totalDiamondLocks; i < displayCount; i++) {
-      addLock('WL', i);
-    }
-  }
-
-  // Update progress bar UI
-  function updateProgressUI() {
-    const percent = Math.min((totalDL / goal) * 100, 100).toFixed(1);
-    progressText.textContent = `Goal: ${goal} DL — Raised: ${totalDL.toFixed(2)} DL (${percent}%)`;
+  function updateProgressBar() {
+    const goal = state.goalDL || 1;
+    const raised = state.totalDL + (state.totalWL / 100);
+    const percent = Math.min((raised / goal) * 100, 100).toFixed(1);
+    progressText.textContent = `Goal: ${goal} DL — Raised: ${raised.toFixed(2)} DL (${percent}%)`;
     progressFill.style.width = `${percent}%`;
   }
 
+  function renderLocks() {
+    fallArea.innerHTML = '';
+    let totalLocks = state.totalDL * 100 + state.totalWL; // all locks as "units" (1 DL = 100 WL)
+
+    // Convert every 100 WL into 1 DL automatically
+    state.totalDL += Math.floor(state.totalWL / 100);
+    state.totalWL = state.totalWL % 100;
+
+    let dlCount = Math.floor(totalLocks / 100);
+    let wlCount = totalLocks % 100;
+
+    // Make sure total locks don't exceed MAX_LOCKS
+    if (dlCount + wlCount > MAX_LOCKS) {
+      const over = dlCount + wlCount - MAX_LOCKS;
+      if (wlCount >= over) wlCount -= over;
+      else {
+        dlCount -= (over - wlCount);
+        wlCount = 0;
+      }
+    }
+
+    // Draw diamond locks
+    for (let i = 0; i < dlCount; i++) {
+      const lock = document.createElement('div');
+      lock.classList.add('falling-lock', 'diamond-lock');
+      let pos = getRandomPosition(i);
+      lock.style.left = pos.x + 'px';
+      lock.style.bottom = pos.y + 'px';
+      lock.style.width = '18px';
+      lock.style.height = '18px';
+      fallArea.appendChild(lock);
+    }
+    // Draw world locks
+    for (let i = 0; i < wlCount; i++) {
+      const lock = document.createElement('div');
+      lock.classList.add('falling-lock', 'world-lock');
+      let pos = getRandomPosition(dlCount + i);
+      lock.style.left = pos.x + 'px';
+      lock.style.bottom = pos.y + 'px';
+      lock.style.width = '18px';
+      lock.style.height = '18px';
+      fallArea.appendChild(lock);
+    }
+  }
+
+  // Listen to Firebase database changes
+  const stateRef = ref(db, 'donationJar');
+  onValue(stateRef, (snapshot) => {
+    if (snapshot.exists()) {
+      state = snapshot.val();
+      if (!state.goalDL) state.goalDL = parseInt(goalInput.value, 10) || 500;
+      updateProgressBar();
+      renderLocks();
+    }
+  });
+
+  // Button handler
   dropBtn.onclick = () => {
-    const wlDrop = parseInt(wlInput.value) || 0;
-    const dlDrop = parseInt(dlInput.value) || 0;
+    const wlToAdd = parseInt(wlInput.value, 10) || 0;
+    const dlToAdd = parseInt(dlInput.value, 10) || 0;
+    const newGoal = parseInt(goalInput.value, 10) || 500;
 
-    if(wlDrop === 0 && dlDrop === 0) return;
+    state.goalDL = newGoal;
+    state.totalWL = (state.totalWL || 0) + wlToAdd;
+    state.totalDL = (state.totalDL || 0) + dlToAdd;
 
-    totalWL += wlDrop;
-    totalDL += dlDrop;
+    // Update Firebase
+    update(stateRef, state);
 
-    // Convert WL to DL on the fly
-    const converted = Math.floor(totalWL / wlPerDlConversion);
-    totalDL += converted;
-    totalWL = totalWL % wlPerDlConversion;
-
-    set(dataRef, {
-      totalDL,
-      totalWL,
-      goal
-    });
-
-    updateJarDisplay();
-    updateProgressUI();
-
+    // Reset inputs
     wlInput.value = 0;
     dlInput.value = 0;
   };
 
-  // Sync with Firebase realtime updates
-  onValue(dataRef, (snapshot) => {
-    const data = snapshot.val();
-    if(data){
-      totalDL = data.totalDL || 0;
-      totalWL = data.totalWL || 0;
-      goal = data.goal || 500;
-      goalInput.value = goal;
-
-      updateJarDisplay();
-      updateProgressUI();
-    }
-  });
-
-  goalInput.onchange = () => {
-    goal = parseInt(goalInput.value) || 500;
-    set(dataRef, { totalDL, totalWL, goal });
-    updateProgressUI();
-  };
-
-  // Initialize display on load
-  updateJarDisplay();
-  updateProgressUI();
 </script>
 
 </body>
