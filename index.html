@@ -7,7 +7,7 @@
 <style>
   body {
     background: transparent;
-    font-family: 'Arial', sans-serif;
+    font-family: Arial, sans-serif;
     color: white;
     margin: 0;
     overflow: hidden;
@@ -15,7 +15,7 @@
   }
   #container {
     position: relative;
-    width: 400px;
+    width: 320px;
     margin: 20px auto;
     text-align: center;
   }
@@ -26,9 +26,7 @@
     height: 400px;
     background: url('jar.png') no-repeat center bottom;
     background-size: contain;
-    overflow: hidden;
-    border-radius: 40px 40px 80px 80px;
-    box-shadow: inset 0 0 30px rgba(255,255,255,0.15);
+    overflow: visible;
   }
   #fall-area {
     position: absolute;
@@ -89,7 +87,7 @@
     font-size: 16px;
   }
   #control-panel {
-    width: 400px;
+    width: 320px;
     margin: 10px auto;
     color: white;
     text-align: center;
@@ -152,7 +150,6 @@
   const db = getDatabase(app);
 
   const totalRaisedRef = ref(db, 'totalRaised');
-
   const GOAL = 500;
 
   const fallArea = document.getElementById('fall-area');
